@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: LLM API
+  version: 1.0.0
+  description: API for interacting with various LLM providers
+
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /generate:
+    post:
+      summary: Generate text using an LLM
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  description: The LLM provider (e.g., 'vertex_ai', 'azure_openai', 'bedrock')
+                model_id:
+                  type: string
+                  description: The ID of the LLM model
+                prompt:
+                  type: string
+                  description: The prompt to send to the LLM
+                temperature:
+                  type: number
+                  default: 0.7
+                  description: The temperature parameter for the LLM
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
